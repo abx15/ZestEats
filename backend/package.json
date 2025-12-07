@@ -27,7 +27,7 @@
   },
   "license": "ISC",
   "author": "Arun Kumar Bind",
-  "type": "commonjs",
+  "type": "module",
   "main": "index.js",
   "scripts": {
     "dev": "nodemon index.js",
