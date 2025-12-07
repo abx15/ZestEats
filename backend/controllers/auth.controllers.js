@@ -1,5 +1,6 @@
 import bcrypt from 'bcryptjs';
 import User from '../models/user.model.js';
+import genToken from '../utils/token.js';
 
 const signup = async (req, res) => {
     try {
@@ -71,8 +72,5 @@ const logout = async (req, res) => {
     }
 
 }
-export default {
-    signup,
-    login,
-    logout
-}
+
+export { signup, login, logout };

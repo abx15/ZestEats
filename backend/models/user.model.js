@@ -1,3 +1,5 @@
+import mongoose from 'mongoose';
+
 const userSchma = new mongoose.Schema({
     fullName: {
         type: String,
