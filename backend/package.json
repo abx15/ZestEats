@@ -1,0 +1,49 @@
+{
+  "name": "zesteats-backend",
+  "version": "1.0.0",
+  "description": "ZestEats Backend API — A fast and secure food delivery backend with authentication, payments, and order management.",
+  "keywords": [
+    "mern",
+    "food-delivery",
+    "nodejs",
+    "express",
+    "mongodb",
+    "razorpay",
+    "api",
+    "payment-gateway",
+    "jwt-auth",
+    "order-management",
+    "restaurant-app",
+    "swiggy-clone",
+    "zomato-clone"
+  ],
+  "homepage": "https://github.com/abx15/ZestEats#readme",
+  "bugs": {
+    "url": "https://github.com/abx15/ZestEats/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/abx15/ZestEats.git"
+  },
+  "license": "ISC",
+  "author": "Arun Kumar Bind",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index.js",
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "cookie-parser": "^1.4.7",
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^9.0.1",
+    "nodemon": "^3.1.11"
+  }
+}
