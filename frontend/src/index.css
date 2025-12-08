@@ -1,1 +1,26 @@
 @import "tailwindcss";
+
+@theme {
+  --color-primary: #FF4D4D;
+  --color-secondary: #FFA500;
+  --color-accent: #FFD700;
+  --color-background: #FFFFFF;
+  --color-text: #333333;
+}
+
+/* 
+<button class="bg-primary text-white px-4 py-2 rounded">
+  Order Now
+</button>
+
+<div class="bg-secondary text-text p-4 rounded">
+  Friendly Note
+</div>
+
+<span class="bg-accent text-text px-2 py-1 rounded-full">
+  Special Offer
+</span>
+
+<section class="bg-background text-text p-6">
+  Content here...
+</section> */
