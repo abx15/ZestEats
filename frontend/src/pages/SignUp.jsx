@@ -3,7 +3,6 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import logo from "../assets/logo.png";
 
 const SignUp = () => {
-
   const [showPass, setShowPass] = useState(false);
   const [showCpass, setShowCpass] = useState(false);
 
@@ -34,7 +33,8 @@ const SignUp = () => {
             <input
               type="text"
               placeholder="Enter your full name"
-              className="w-full px-4 py-2 border border-gray-300 rounded focus:border-primary focus:ring-2 focus:ring-primary/30 outline-none"
+              className="w-full px-4 py-2 border border-gray-300 rounded 
+              focus:border-primary focus:ring-2 focus:ring-primary/30 outline-none"
               required
             />
           </div>
@@ -45,7 +45,20 @@ const SignUp = () => {
             <input
               type="email"
               placeholder="Enter your email"
-              className="w-full px-4 py-2 border border-gray-300 rounded focus:border-primary focus:ring-2 focus:ring-primary/30 outline-none"
+              className="w-full px-4 py-2 border border-gray-300 rounded 
+              focus:border-primary focus:ring-2 focus:ring-primary/30 outline-none"
+              required
+            />
+          </div>
+
+          {/* Mobile Number */}
+          <div>
+            <label className="block mb-1 font-medium">Mobile Number</label>
+            <input
+              type="tel"
+              placeholder="Enter your mobile number"
+              className="w-full px-4 py-2 border border-gray-300 rounded 
+              focus:border-primary focus:ring-2 focus:ring-primary/30 outline-none"
               required
             />
           </div>
@@ -57,13 +70,14 @@ const SignUp = () => {
             <input
               type={showPass ? "text" : "password"}
               placeholder="Create a password"
-              className="w-full px-4 py-2 border border-gray-300 rounded pr-10 focus:border-primary focus:ring-2 focus:ring-primary/30 outline-none"
+              className="w-full px-4 py-2 border border-gray-300 rounded pr-10 
+              focus:border-primary focus:ring-2 focus:ring-primary/30 outline-none"
               required
             />
 
             {/* Eye Icon */}
             <span
-              className="absolute right-3 top-[42px] text-gray-600 cursor-pointer"
+              className="absolute right-3 top-[42px] cursor-pointer text-gray-600"
               onClick={() => setShowPass(!showPass)}
             >
               {showPass ? <FaEyeSlash /> : <FaEye />}
@@ -77,13 +91,14 @@ const SignUp = () => {
             <input
               type={showCpass ? "text" : "password"}
               placeholder="Re-enter your password"
-              className="w-full px-4 py-2 border border-gray-300 rounded pr-10 focus:border-primary focus:ring-2 focus:ring-primary/30 outline-none"
+              className="w-full px-4 py-2 border border-gray-300 rounded pr-10 
+              focus:border-primary focus:ring-2 focus:ring-primary/30 outline-none"
               required
             />
 
             {/* Eye Icon */}
             <span
-              className="absolute right-3 top-[42px] text-gray-600 cursor-pointer"
+              className="absolute right-3 top-[42px] cursor-pointer text-gray-600"
               onClick={() => setShowCpass(!showCpass)}
             >
               {showCpass ? <FaEyeSlash /> : <FaEye />}
@@ -93,7 +108,8 @@ const SignUp = () => {
           {/* Submit Button */}
           <button
             type="submit"
-            className="w-full bg-primary py-2 text-white font-semibold rounded hover:bg-secondary transition-all"
+            className="w-full bg-primary py-2 text-white font-semibold rounded 
+            hover:bg-secondary transition-all"
           >
             Sign Up
           </button>
@@ -106,6 +122,7 @@ const SignUp = () => {
             Login
           </a>
         </p>
+
       </div>
     </div>
   );
