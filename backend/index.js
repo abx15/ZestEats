@@ -5,10 +5,10 @@ import cors from 'cors';
 import authRouter from './routes/auth.routes.js';
 import orderRouter from './routes/order.routes.js';
 import userRouter from './routes/user.routes.js';
-import connectDb from './config/db.js';
+import connectDB from './config/db.js';
 
 dotenv.config();
-connectDb();
+connectDB();
 
 const app = express();
 
