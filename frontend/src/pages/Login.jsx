@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 import logo from "../assets/Logo.png";
 
-const serverUrl = "http://localhost:8000"; // Backend server URL
+const serverUrl = "http://localhost:8000";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -27,37 +27,33 @@ const Login = () => {
 
       if (result.status === 200) {
         alert("Login Successful!");
-        // Store token in localStorage
-        if (typeof window !== 'undefined' && result.data.token) {
+
+        if (result.data.token) {
           localStorage.setItem("token", result.data.token);
         }
+
         navigate("/");
       }
     } catch (error) {
-      console.error(error);
       alert(error.response?.data?.message || "Login failed!");
     }
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-background text-text px-4 pt-20">
-      <div className="w-full max-w-md bg-white shadow-lg rounded-xl p-8 border border-accent/30">
+      <div className="w-full max-w-md bg-white shadow-lg rounded-xl p-8 border border-accent/30 animate-fadeIn">
+
         {/* Logo */}
         <div className="flex justify-center mb-4">
-          <img
-            src={logo}
-            alt="Logo"
-            className="h-16 sm:h-20 md:h-24 w-auto object-contain"
-          />
+          <img src={logo} alt="Logo" className="h-20 w-auto object-contain" />
         </div>
 
-        {/* Title */}
         <h2 className="text-3xl font-bold text-primary text-center mb-6">
           Welcome Back
         </h2>
 
-        {/* Form */}
         <form className="space-y-5" onSubmit={handleLogin}>
+
           {/* Email */}
           <div>
             <label className="block mb-1 font-medium">Email Address</label>
@@ -90,7 +86,16 @@ const Login = () => {
             </span>
           </div>
 
-          {/* Login Button */}
+          {/* Forgot Link (Corrected) */}
+          <div className="text-right -mt-2">
+            <Link
+              to="/forgot-password"
+              className="text-primary font-semibold hover:underline hover:text-secondary transition-all"
+            >
+              Forgot Password?
+            </Link>
+          </div>
+
           <button
             type="submit"
             className="w-full bg-primary py-2 text-white font-semibold rounded hover:bg-secondary transition-all"
@@ -98,31 +103,27 @@ const Login = () => {
             Login
           </button>
 
-          {/* OR Divider */}
           <div className="flex items-center my-4">
             <hr className="flex-1 border-gray-300" />
             <span className="px-2 text-gray-500">OR</span>
             <hr className="flex-1 border-gray-300" />
           </div>
 
-          {/* Google Login */}
-          <div className="flex flex-col gap-3">
-            <button
-              type="button"
-              className="w-full flex items-center justify-center gap-2 py-2 border border-gray-300 rounded hover:bg-gray-100 transition-all"
-              onClick={() => window.open(`${serverUrl}/auth/google`, "_self")}
-            >
-              <FcGoogle className="text-red-500" /> Login with Google
-            </button>
-          </div>
+          {/* Google */}
+          <button
+            type="button"
+            className="w-full flex items-center justify-center gap-2 py-2 border border-gray-300 rounded hover:bg-gray-100 transition-all"
+            onClick={() => window.open(`${serverUrl}/auth/google`, "_self")}
+          >
+            <FcGoogle /> Login with Google
+          </button>
         </form>
 
-        {/* Footer */}
-        <p className="text-center mt-4">
+        <p className="text-center mt-6">
           Don’t have an account?{" "}
-          <a href="/signup" className="text-primary font-bold hover:underline">
+          <Link to="/signup" className="text-primary font-bold hover:underline">
             Sign Up
-          </a>
+          </Link>
         </p>
       </div>
     </div>

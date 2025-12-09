@@ -21,6 +21,16 @@ const userSchma = new mongoose.Schema({
         type: String, enum: ['admin', 'user', 'restaurantOwner', 'deliveryBoy'],
         required: true
     },
+    resetOtp:{
+        type: String,
+    },
+    isOtpVerified:{
+        type: Boolean,
+    },
+    otpExpires:{
+        type: Date,
+        default: Date.now
+    }
 }, { timestamps: true });
 
 const User = mongoose.model('User', userSchma);
