@@ -1,6 +1,8 @@
 import bcrypt from 'bcryptjs';
 import User from '../models/user.model.js';
 import genToken from '../utils/token.js';
+import { sendOtpMail } from '../utils/mailer.js';
+
 
 const signup = async (req, res) => {
     try {
@@ -76,3 +78,27 @@ const logout = async (req, res) => {
 export { signup, login, logout };
 
 
+export const sendOtp = async (req, res) => {
+    try {
+        const { email } = req.body;
+
+        const user = await User.findOne({ email });
+        if (!user) {
+            return res.status(400).json({ message: "User not found" });
+        }
+        const otp = Math.floor(100000 + Math.random() * 900000);
+        user.resetOtp = otp;
+        user.otpExpires = Date.now() + 5 * 60 * 1000; // 5 minutes from now
+        user.isOtpVerified = false;
+        await user.save();
+        const isSent = await sendOtpMail(email, otp, true);
+        if (isSent) {
+            return res.status(200).json({ message: "OTP sent successfully" });
+        } else {
+            return res.status().status(500).json({ message: "Failed to send OTP" });
+        }
+    } catch (error) {
+        return res.status(500).json({ message: "Server error" + error });
+
+    }
+}
