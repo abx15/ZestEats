@@ -1,7 +1,7 @@
 import bcrypt from 'bcryptjs';
 import User from '../models/user.model.js';
 import genToken from '../utils/token.js';
-import { sendOtpMail } from '../utils/mailer.js';
+import { sendOtpMail } from '../utils/mail.js';
 
 
 const signup = async (req, res) => {
@@ -75,10 +75,9 @@ const logout = async (req, res) => {
 
 }
 
-export { signup, login, logout };
+export { signup, login, logout, sendOtp, verifyOtp, resetPassword };
 
-
-export const sendOtp = async (req, res) => {
+const sendOtp = async (req, res) => {
     try {
         const { email } = req.body;
 
