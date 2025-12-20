@@ -6,6 +6,8 @@ import { useNavigate } from "react-router-dom";
 
 import logo from "../assets/Logo.png";
 
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { auth } from "../firebase";
 const serverUrl = "http://localhost:8000"; // Backend server URL
 
 const SignUp = () => {
@@ -55,6 +57,27 @@ const SignUp = () => {
     } catch (error) {
       console.error(error);
       alert(error.response?.data?.message || "Signup failed!");
+    }
+  };
+
+  const handleGooogleAuth = async (e) => {
+    e.preventDefault();
+
+    try {
+      const provider = new GoogleAuthProvider();
+      const result = await signInWithPopup(auth, provider);
+
+      const user = result.user;
+      console.log("Google User:", user);
+
+      const token = await user.getIdToken();
+      localStorage.setItem("token", token);
+
+      alert("Google login successful");
+      navigate("/");
+    } catch (error) {
+      console.error(error);
+      alert(error.message);
     }
   };
 
@@ -161,17 +184,16 @@ const SignUp = () => {
                 key={r}
                 type="button"
                 onClick={() => setRole(r)}
-                className={`flex-1 mx-1 py-2 rounded font-medium transition-all text-sm ${
-                  role === r
-                    ? "bg-primary text-white"
-                    : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-                }`}
+                className={`flex-1 mx-1 py-2 rounded font-medium transition-all text-sm ${role === r
+                  ? "bg-primary text-white"
+                  : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+                  }`}
               >
                 {r === "user"
                   ? "Customer"
                   : r === "deliveryBoy"
-                  ? "Delivery Boy"
-                  : "Restaurant Owner"}
+                    ? "Delivery Boy"
+                    : "Restaurant Owner"}
               </button>
             ))}
           </div>
@@ -195,8 +217,8 @@ const SignUp = () => {
           <div className="flex flex-col gap-3">
             <button
               type="button"
-              className="w-full flex items-center justify-center gap-2 py-2 border border-gray-300 rounded hover:bg-gray-100 transition-all"
-              onClick={() => window.open(`${serverUrl}/auth/google`, "_self")}
+              className="w-full flex items-center justify-center gap-2 py-2 border border-gray-300 rounded hover:bg-gray-100 transition-all cursor-pointer"
+              onClick={handleGooogleAuth}
             >
               <FcGoogle className="text-red-500" /> Sign up with Google
             </button>
