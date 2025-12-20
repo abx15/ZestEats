@@ -61,6 +61,10 @@ const SignUp = () => {
   };
 
   const handleGooogleAuth = async (e) => {
+    if(!mobileNumber){
+      alert("Please enter your mobile number");
+      return;
+    }
     e.preventDefault();
 
     try {
