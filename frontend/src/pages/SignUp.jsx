@@ -25,6 +25,7 @@ const SignUp = () => {
   // Show/Hide Password
   const [showPass, setShowPass] = useState(false);
   const [showCpass, setShowCpass] = useState(false);
+  const [showError, setShowError] = useState("");
 
   const handleSignUp = async (e) => {
     e.preventDefault();
@@ -62,7 +63,7 @@ const SignUp = () => {
   };
 
   const handleGooogleAuth = async (e) => {
-    if(!mobileNumber){
+    if (!mobileNumber) {
       alert("Please enter your mobile number");
       return;
     }
@@ -83,6 +84,14 @@ const SignUp = () => {
     } catch (error) {
       console.error(error);
       alert(error.message);
+    }
+  };
+
+  const errorHandler = (error) => {
+    if (error.response) {
+      setShowError(error.response.data.message);
+    } else {
+      setShowError(error.message);
     }
   };
 
