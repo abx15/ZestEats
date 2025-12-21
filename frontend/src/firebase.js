@@ -12,3 +12,10 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
+
+// console.log("API KEY:", import.meta.env.VITE_FIREBASE_API_KEY);
+// console.log("AUTH DOMAIN:", import.meta.env.VITE_FIREBASE_AUTH_DOMAIN);
+// console.log("PROJECT ID:", import.meta.env.VITE_FIREBASE_PROJECT_ID);
+// console.log("STORAGE BUCKET:", import.meta.env.VITE_FIREBASE_STORAGE_BUCKET);
+// console.log("MESSAGING SENDER ID:", import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID);
+// console.log("APP ID:", import.meta.env.VITE_FIREBASE_APP_ID);
