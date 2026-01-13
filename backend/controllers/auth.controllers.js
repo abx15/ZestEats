@@ -75,7 +75,7 @@ const logout = async (req, res) => {
 
 }
 
-export { signup, login, logout, sendOtp, verifyOtp, resetPassword };
+
 
 const sendOtp = async (req, res) => {
     try {
@@ -147,35 +147,55 @@ const resetPassword = async (req, res) => {
 }
 
 
-export const googleAuth = async (req, res) => {
-    try {
-        const { fullName, email, mobile, role } = req.body;
-        let user = await User.findOne({ email });
-        if (user) {
-            return res.status(400).json({ message: "User already exists" });
-        }
-        if (mobile.length !== 10) {
-            return res.status(400).json({ message: "Mobile number must be 10 digits long" });
-        }
-        const hashedPassword = await bcrypt.hash(password, 10);
+import admin from '../config/firebaseAdmin.js'; // You need to create this
 
-        user = await User.create({
-            fullName,
-            email,
-            password: hashedPassword,
-            mobile,
-            role,
-        })
-        const token = await genToken(user._id);
-        res.cookie("token", token, {
+export const googleLogin = async (req, res) => {
+    try {
+        const { token, role } = req.body; // Role from frontend selection if new user
+
+        // Verify Firebase Token
+        const decodedToken = await admin.auth().verifyIdToken(token);
+        const { email, name, picture, uid } = decodedToken;
+
+        if (!email) {
+            return res.status(400).json({ message: "Invalid Google Token" });
+        }
+
+        let user = await User.findOne({ email });
+
+        if (!user) {
+            // Register new user
+            const randomPassword = Math.random().toString(36).slice(-8); // Random password
+            const hashedPassword = await bcrypt.hash(randomPassword, 10);
+
+            user = await User.create({
+                fullName: name || "Google User",
+                email,
+                password: hashedPassword,
+                role: role || "user", // Default to user if not provided
+                isGoogleAuth: true,
+                firebaseUid: uid,
+                image: picture
+            });
+        }
+
+        // Generate JWT
+        const jwtToken = await genToken(user._id);
+
+        res.cookie("token", jwtToken, {
             secure: process.env.NODE_ENV === "DEVELOPMENT" ? false : true,
             sameSite: "strict",
-            maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+            maxAge: 7 * 24 * 60 * 60 * 1000,
             httpOnly: true,
         });
 
-        res.status(201).json({ message: "Login successful", token });
+        res.status(200).json({ message: "Login successful", token: jwtToken, user });
+
     } catch (error) {
-        return res.status(500).json({ message: "Server error" + error });
+        console.error("Google Auth Error:", error);
+        return res.status(500).json({ message: "Google Authentication failed" });
     }
 }
+};
+
+export { signup, login, logout, sendOtp, verifyOtp, resetPassword };

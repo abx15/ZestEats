@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import { useCart } from '../context/CartContext';
 import { FaStar, FaClock, FaFilter, FaSearch, FaFire, FaLeaf, FaHeart, FaShoppingCart } from 'react-icons/fa';
 import { MdLocalOffer, MdRestaurantMenu, MdDeliveryDining, MdSort } from 'react-icons/md';
 import { GiHotMeal, GiMeat, GiFruitBowl } from 'react-icons/gi';
 
 const MenuPage = () => {
+  const { addToCart } = useCart();
   const [activeCategory, setActiveCategory] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
   const [sortBy, setSortBy] = useState('popular');
@@ -206,13 +208,13 @@ const MenuPage = () => {
 
   const filteredItems = menuItems.filter(item => {
     const matchesCategory = activeCategory === 'all' || item.category === activeCategory;
-    const matchesSearch = item.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
-                         item.description.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesSearch = item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      item.description.toLowerCase().includes(searchTerm.toLowerCase());
     return matchesCategory && matchesSearch;
   });
 
   const sortedItems = [...filteredItems].sort((a, b) => {
-    switch(sortBy) {
+    switch (sortBy) {
       case 'price-low':
         return parseInt(a.discountPrice.replace('₹', '')) - parseInt(b.discountPrice.replace('₹', ''));
       case 'price-high':
@@ -230,7 +232,7 @@ const MenuPage = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-orange-50 text-gray-800">
-      
+
       {/* Promotional Banner */}
       <div className="bg-gradient-to-r from-red-600 via-orange-500 to-yellow-500 text-white py-4">
         <div className="max-w-7xl mx-auto px-4">
@@ -262,7 +264,7 @@ const MenuPage = () => {
             </h1>
             <p className="text-gray-600 mt-2">156+ delicious dishes waiting for you</p>
           </div>
-          
+
           {/* Cart Button */}
           <button className="relative bg-gradient-to-r from-red-500 to-orange-500 text-white px-6 py-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 flex items-center gap-3">
             <FaShoppingCart className="text-xl" />
@@ -278,7 +280,7 @@ const MenuPage = () => {
         {/* Search and Filter Bar */}
         <div className="bg-white rounded-2xl shadow-lg p-4 md:p-6 mb-8">
           <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
-            
+
             {/* Search Box */}
             <div className="flex-1 w-full md:w-auto">
               <div className="relative">
@@ -296,7 +298,7 @@ const MenuPage = () => {
             {/* Sort Dropdown */}
             <div className="flex items-center gap-3">
               <MdSort className="text-gray-500" />
-              <select 
+              <select
                 className="bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-red-500"
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
@@ -339,18 +341,17 @@ const MenuPage = () => {
       </header>
 
       <main className="max-w-7xl mx-auto px-4">
-        
+
         {/* Categories Navigation */}
         <div className="mb-8">
           <div className="flex overflow-x-auto pb-4 space-x-4 scrollbar-hide">
             {categories.map((category) => (
               <button
                 key={category.id}
-                className={`flex-shrink-0 flex flex-col items-center p-4 rounded-2xl transition-all duration-300 ${
-                  activeCategory === category.id 
-                    ? 'bg-gradient-to-r from-red-500 to-orange-500 text-white shadow-lg scale-105' 
-                    : 'bg-white text-gray-700 hover:bg-gray-50 hover:shadow-md'
-                }`}
+                className={`flex-shrink-0 flex flex-col items-center p-4 rounded-2xl transition-all duration-300 ${activeCategory === category.id
+                  ? 'bg-gradient-to-r from-red-500 to-orange-500 text-white shadow-lg scale-105'
+                  : 'bg-white text-gray-700 hover:bg-gray-50 hover:shadow-md'
+                  }`}
                 onClick={() => setActiveCategory(category.id)}
               >
                 <span className="text-3xl mb-2">{category.icon}</span>
@@ -365,8 +366,8 @@ const MenuPage = () => {
         <div className="mb-12">
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-2xl font-bold text-gray-800">
-              {activeCategory === 'all' ? 'All Dishes' : 
-               categories.find(c => c.id === activeCategory)?.name} 
+              {activeCategory === 'all' ? 'All Dishes' :
+                categories.find(c => c.id === activeCategory)?.name}
               <span className="text-red-500 ml-2">({sortedItems.length})</span>
             </h2>
             <div className="text-gray-600">
@@ -383,8 +384,8 @@ const MenuPage = () => {
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {sortedItems.map((item) => (
-                <div 
-                  key={item.id} 
+                <div
+                  key={item.id}
                   className="bg-white rounded-3xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:scale-[1.02] border border-gray-100"
                 >
                   <div className="relative">
@@ -393,39 +394,38 @@ const MenuPage = () => {
                       alt={item.name}
                       className="w-full h-56 object-cover"
                     />
-                    
+
                     {/* Tags */}
                     <div className="absolute top-3 left-3 flex flex-wrap gap-2">
                       {item.tags.map((tag, index) => (
-                        <span 
-                          key={index} 
-                          className={`px-3 py-1 rounded-full text-xs font-bold ${
-                            tag === '23% OFF' 
-                              ? 'bg-gradient-to-r from-red-600 to-orange-500 text-white' 
-                              : tag === 'Best Seller'
+                        <span
+                          key={index}
+                          className={`px-3 py-1 rounded-full text-xs font-bold ${tag === '23% OFF'
+                            ? 'bg-gradient-to-r from-red-600 to-orange-500 text-white'
+                            : tag === 'Best Seller'
                               ? 'bg-yellow-500 text-white'
                               : tag === 'Vegetarian'
-                              ? 'bg-green-500 text-white'
-                              : 'bg-gray-800 text-white'
-                          }`}
+                                ? 'bg-green-500 text-white'
+                                : 'bg-gray-800 text-white'
+                            }`}
                         >
                           {tag}
                         </span>
                       ))}
                     </div>
-                    
+
                     {/* Favorite Button */}
                     <button className="absolute top-3 right-3 bg-white/90 p-2 rounded-full hover:bg-white transition-colors">
                       <FaHeart className={item.favorite ? "text-red-500" : "text-gray-400"} />
                     </button>
-                    
+
                     {/* Prep Time */}
                     <div className="absolute bottom-3 right-3 bg-black/70 text-white px-3 py-1 rounded-full text-sm">
                       <FaClock className="inline mr-1" />
                       {item.prepTime}
                     </div>
                   </div>
-                  
+
                   <div className="p-5">
                     <div className="flex justify-between items-start mb-3">
                       <div className="flex-1">
@@ -437,7 +437,7 @@ const MenuPage = () => {
                         <span className="font-bold">{item.rating}</span>
                       </div>
                     </div>
-                    
+
                     {/* Additional Info */}
                     <div className="flex items-center justify-between mb-4">
                       <div className="flex items-center gap-4">
@@ -456,7 +456,7 @@ const MenuPage = () => {
                         Category: <span className="font-medium capitalize">{item.category}</span>
                       </div>
                     </div>
-                    
+
                     {/* Price and Add to Cart */}
                     <div className="flex items-center justify-between">
                       <div>
@@ -466,7 +466,10 @@ const MenuPage = () => {
                           Save ₹{parseInt(item.price.replace('₹', '')) - parseInt(item.discountPrice.replace('₹', ''))}
                         </div>
                       </div>
-                      <button className="bg-gradient-to-r from-red-500 to-orange-500 hover:from-red-600 hover:to-orange-600 text-white font-bold px-5 py-3 rounded-xl transition-all duration-300 transform hover:scale-105 flex items-center gap-2">
+                      <button
+                        onClick={() => addToCart(item)}
+                        className="bg-gradient-to-r from-red-500 to-orange-500 hover:from-red-600 hover:to-orange-600 text-white font-bold px-5 py-3 rounded-xl transition-all duration-300 transform hover:scale-105 flex items-center gap-2"
+                      >
                         <FaShoppingCart />
                         <span>Add to Cart</span>
                       </button>
@@ -500,7 +503,7 @@ const MenuPage = () => {
               </div>
             </div>
             <div className="md:w-1/2">
-              <img 
+              <img
                 src="https://images.unsplash.com/photo-1490818387583-1baba5e638af?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
                 alt="Nutrition"
                 className="rounded-2xl shadow-lg w-full"
@@ -529,7 +532,7 @@ const MenuPage = () => {
                 Apply Offer
               </button>
             </div>
-            
+
             <div className="bg-gradient-to-r from-yellow-500 to-yellow-400 text-gray-800 p-6 rounded-3xl">
               <div className="flex items-center gap-3 mb-4">
                 <div className="bg-white/20 p-3 rounded-full">

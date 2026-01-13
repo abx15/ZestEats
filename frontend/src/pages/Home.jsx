@@ -1,9 +1,16 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import { useCart } from '../context/CartContext';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import { Navigation, Autoplay } from 'swiper/modules';
 import { FaStar, FaClock, FaTruck, FaShieldAlt, FaPhoneAlt, FaCheckCircle } from 'react-icons/fa';
 import { MdLocalOffer, MdRestaurantMenu, MdDeliveryDining } from 'react-icons/md';
 import { GiHotMeal } from 'react-icons/gi';
 
 const Home = () => {
+  const { addToCart } = useCart();
   const popularDishes = [
     {
       id: 1,
@@ -142,10 +149,10 @@ const Home = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-orange-50 text-gray-800">
-      
+    <div className="w-full min-h-screen bg-gradient-to-b from-white to-orange-50 text-gray-800 overflow-x-hidden">
+
       {/* Top Promotional Banner */}
-      <div className="bg-gradient-to-r from-red-600 via-orange-500 to-yellow-500 text-white py-4">
+      <div className="w-full bg-gradient-to-r from-red-600 via-orange-500 to-yellow-500 text-white py-4 shadow-md">
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex flex-col md:flex-row items-center justify-center gap-3 md:gap-6">
             <div className="flex items-center gap-3">
@@ -159,7 +166,7 @@ const Home = () => {
               </span>
               <span className="text-lg">on your first order</span>
             </div>
-            <div className="bg-white/20 px-4 py-2 rounded-lg font-bold">
+            <div className="bg-white/20 px-4 py-2 rounded-lg font-bold backdrop-blur-sm">
               Use Code: <span className="text-white">WELCOME23</span>
             </div>
           </div>
@@ -167,110 +174,98 @@ const Home = () => {
       </div>
 
       {/* Hero Section */}
-      <section className="max-w-7xl mx-auto px-4 md:px-6 py-12 md:py-20">
-        <div className="flex flex-col lg:flex-row items-center justify-between gap-12">
-          
+      <section className="w-full max-w-7xl mx-auto px-4 md:px-6 py-12 md:py-20 relative">
+        <div className="flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-20">
+
           {/* Left Content */}
-          <div className="lg:w-1/2">
-            <div className="inline-flex items-center bg-gradient-to-r from-red-500 to-orange-500 text-white px-6 py-3 rounded-full mb-6 shadow-lg">
+          <div className="lg:w-1/2 z-10">
+            <div className="inline-flex items-center bg-gradient-to-r from-red-500 to-orange-500 text-white px-6 py-3 rounded-full mb-6 shadow-lg animate-fadeIn">
               <MdLocalOffer className="text-xl mr-2" />
               <span className="font-bold">Limited Time Offer - 23% OFF!</span>
             </div>
-            
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold mb-6">
+
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold mb-6 leading-tight animate-slideDown">
               <span className="block text-gray-800">Craving</span>
               <span className="bg-gradient-to-r from-red-600 to-orange-500 bg-clip-text text-transparent">
                 Delicious Food?
               </span>
             </h1>
-            
-            <p className="text-lg md:text-2xl text-gray-600 mb-8">
+
+            <p className="text-lg md:text-2xl text-gray-600 mb-8 animate-fadeIn" style={{ animationDelay: '0.2s' }}>
               Order from 500+ restaurants. Fast delivery, exclusive offers, and the best food in town!
             </p>
-            
-            <div className="flex flex-col sm:flex-row gap-4 mb-8">
-              <button className="bg-gradient-to-r from-red-600 to-orange-500 hover:from-red-700 hover:to-orange-600 text-white font-bold px-8 py-4 rounded-xl shadow-lg transition-all duration-300 transform hover:scale-105 hover:shadow-xl flex items-center justify-center gap-3">
+
+            <div className="flex flex-col sm:flex-row gap-4 mb-12 animate-fadeIn" style={{ animationDelay: '0.3s' }}>
+              <Link to="/menu" className="bg-gradient-to-r from-red-600 to-orange-500 hover:from-red-700 hover:to-orange-600 text-white font-bold px-8 py-4 rounded-xl shadow-lg transition-all duration-300 transform hover:scale-105 hover:shadow-xl flex items-center justify-center gap-3">
                 <MdDeliveryDining className="text-xl" />
                 <span className="text-lg">Order Now</span>
-              </button>
-              
-              <button className="bg-gradient-to-r from-yellow-500 to-yellow-400 hover:from-yellow-600 hover:to-yellow-500 text-gray-800 font-bold px-8 py-4 rounded-xl shadow-lg transition-all duration-300 transform hover:scale-105 hover:shadow-xl flex items-center justify-center gap-3">
+              </Link>
+
+              <Link to="/menu" className="bg-gradient-to-r from-yellow-500 to-yellow-400 hover:from-yellow-600 hover:to-yellow-500 text-gray-800 font-bold px-8 py-4 rounded-xl shadow-lg transition-all duration-300 transform hover:scale-105 hover:shadow-xl flex items-center justify-center gap-3">
                 <GiHotMeal className="text-xl" />
                 <span>Explore Menu</span>
-              </button>
+              </Link>
             </div>
-            
+
             {/* Stats */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
-              <div className="text-center">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8 animate-fadeIn" style={{ animationDelay: '0.4s' }}>
+              <div className="text-center p-4 bg-white rounded-2xl shadow-sm border border-gray-100 hover:border-red-100 transition-colors">
                 <div className="text-3xl font-bold text-red-600">500+</div>
-                <div className="text-gray-600">Restaurants</div>
+                <div className="text-xs md:text-sm text-gray-600 font-medium">Restaurants</div>
               </div>
-              <div className="text-center">
+              <div className="text-center p-4 bg-white rounded-2xl shadow-sm border border-gray-100 hover:border-orange-100 transition-colors">
                 <div className="text-3xl font-bold text-orange-500">4.8</div>
-                <div className="text-gray-600">Avg Rating</div>
+                <div className="text-xs md:text-sm text-gray-600 font-medium">Avg Rating</div>
               </div>
-              <div className="text-center">
+              <div className="text-center p-4 bg-white rounded-2xl shadow-sm border border-gray-100 hover:border-yellow-100 transition-colors">
                 <div className="text-3xl font-bold text-yellow-500">30</div>
-                <div className="text-gray-600">Min Delivery</div>
+                <div className="text-xs md:text-sm text-gray-600 font-medium">Min Delivery</div>
               </div>
-              <div className="text-center">
+              <div className="text-center p-4 bg-white rounded-2xl shadow-sm border border-gray-100 hover:border-red-100 transition-colors">
                 <div className="text-3xl font-bold text-red-500">50K+</div>
-                <div className="text-gray-600">Happy Customers</div>
-              </div>
-            </div>
-            
-            {/* Features */}
-            <div className="flex flex-wrap gap-4">
-              <div className="flex items-center gap-2 text-gray-600">
-                <FaCheckCircle className="text-green-500" />
-                <span>Free delivery above ₹399</span>
-              </div>
-              <div className="flex items-center gap-2 text-gray-600">
-                <FaCheckCircle className="text-green-500" />
-                <span>100% quality guarantee</span>
+                <div className="text-xs md:text-sm text-gray-600 font-medium">Happy Customers</div>
               </div>
             </div>
           </div>
 
           {/* Right Content - Hero Image */}
-          <div className="lg:w-1/2 relative">
+          <div className="lg:w-1/2 relative z-0 animate-fadeIn" style={{ animationDelay: '0.5s' }}>
             <div className="relative">
               <img
                 src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Zm9vZCUyMGRlbGl2ZXJ5fGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=80"
                 alt="Delicious Food Delivery"
-                className="rounded-3xl shadow-2xl w-full h-[400px] object-cover transform hover:scale-105 transition-transform duration-500"
+                className="rounded-3xl shadow-2xl w-full h-[300px] md:h-[400px] lg:h-[500px] object-cover transform hover:scale-[1.01] transition-transform duration-500"
                 onError={(e) => {
                   e.target.onerror = null;
                   e.target.src = "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=800&q=80";
                 }}
               />
-              
-              {/* Floating Discount Card */}
-              <div className="absolute -top-4 -right-4 bg-gradient-to-r from-red-600 to-orange-500 text-white p-6 rounded-2xl shadow-2xl animate-pulse">
+
+              {/* Floating Discount Card - Adjusted for mobile overflow */}
+              <div className="absolute -top-4 -right-2 md:-right-4 bg-gradient-to-r from-red-600 to-orange-500 text-white p-4 md:p-6 rounded-2xl shadow-2xl animate-pulse z-10">
                 <div className="text-center">
-                  <div className="text-4xl font-extrabold">23%</div>
-                  <div className="text-sm font-bold">DISCOUNT</div>
-                  <div className="text-xs mt-2">First Order Only</div>
+                  <div className="text-2xl md:text-4xl font-extrabold">23%</div>
+                  <div className="text-xs md:text-sm font-bold">DISCOUNT</div>
+                  <div className="text-[10px] md:text-xs mt-2">First Order Only</div>
                 </div>
               </div>
-              
+
               {/* Delivery Time Card */}
-              <div className="absolute bottom-6 left-6 bg-white p-4 rounded-2xl shadow-lg">
+              <div className="absolute bottom-4 left-4 md:bottom-6 md:left-6 bg-white p-3 md:p-4 rounded-2xl shadow-lg z-10 max-w-[150px] md:max-w-none">
                 <div className="flex items-center gap-3">
-                  <FaClock className="text-red-500 text-2xl" />
+                  <FaClock className="text-red-500 text-lg md:text-2xl" />
                   <div>
-                    <div className="font-bold text-gray-800">Fast Delivery</div>
-                    <div className="text-sm text-gray-600">30-40 minutes</div>
+                    <div className="font-bold text-gray-800 text-sm md:text-base">Fast Delivery</div>
+                    <div className="text-xs md:text-sm text-gray-600">30-40 minutes</div>
                   </div>
                 </div>
               </div>
             </div>
-            
-            {/* Food Items Floating */}
-            <div className="absolute -bottom-6 -left-6 bg-white p-4 rounded-2xl shadow-lg hidden lg:block">
+
+            {/* Food Items Floating - Hidden on mobile, visible on lg */}
+            <div className="absolute -bottom-6 -left-6 bg-white p-4 rounded-2xl shadow-lg hidden lg:block z-20">
               <div className="flex items-center gap-3">
-                <img 
+                <img
                   src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=100&q=80"
                   alt="Pizza"
                   className="w-12 h-12 rounded-full object-cover"
@@ -280,7 +275,7 @@ const Home = () => {
                   }}
                 />
                 <div>
-                  <div className="font-bold">Cheese Pizza</div>
+                  <div className="font-bold text-gray-800">Cheese Pizza</div>
                   <div className="flex items-center">
                     <span className="text-red-500 line-through text-sm">₹499</span>
                     <span className="ml-2 font-bold text-green-600">₹384</span>
@@ -302,21 +297,34 @@ const Home = () => {
             Explore our wide range of food categories. Something for every taste!
           </p>
         </div>
-        
-        <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-6">
+
+        <Swiper
+          modules={[Navigation, Autoplay]}
+          spaceBetween={30}
+          slidesPerView={2}
+          breakpoints={{
+            640: { slidesPerView: 4 },
+            1024: { slidesPerView: 6 },
+            1280: { slidesPerView: 8 }
+          }}
+          autoplay={{ delay: 2500, disableOnInteraction: false }}
+          loop={true}
+          className="pb-8 px-2"
+        >
           {categories.map((category, index) => (
-            <div 
-              key={index} 
-              className="bg-white rounded-2xl p-4 shadow-md hover:shadow-xl transition-all duration-300 transform hover:scale-105 cursor-pointer border border-gray-100 hover:border-red-100"
-            >
-              <div className="text-4xl text-center mb-2">{category.icon}</div>
-              <div className="text-center">
-                <div className="font-bold text-gray-800">{category.name}</div>
-                <div className="text-sm text-gray-500">{category.count}+ items</div>
+            <SwiperSlide key={index}>
+              <div
+                className="bg-white rounded-2xl p-4 shadow-md hover:shadow-xl transition-all duration-300 transform hover:scale-105 cursor-pointer border border-gray-100 hover:border-red-100 flex flex-col items-center justify-center h-32"
+              >
+                <div className="text-4xl text-center mb-2">{category.icon}</div>
+                <div className="text-center">
+                  <div className="font-bold text-gray-800">{category.name}</div>
+                  <div className="text-sm text-gray-500">{category.count}+ items</div>
+                </div>
               </div>
-            </div>
+            </SwiperSlide>
           ))}
-        </div>
+        </Swiper>
       </section>
 
       {/* Popular Dishes Section */}
@@ -332,11 +340,11 @@ const Home = () => {
             View All <span>→</span>
           </button>
         </div>
-        
+
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {popularDishes.map((dish) => (
-            <div 
-              key={dish.id} 
+            <div
+              key={dish.id}
               className="bg-white rounded-3xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:scale-[1.02] border border-gray-100"
             >
               <div className="relative">
@@ -356,7 +364,7 @@ const Home = () => {
                   {dish.category}
                 </div>
               </div>
-              
+
               <div className="p-6">
                 <div className="flex justify-between items-start mb-3">
                   <h3 className="font-bold text-xl text-gray-800">{dish.name}</h3>
@@ -365,20 +373,23 @@ const Home = () => {
                     <span className="font-bold">{dish.rating}</span>
                   </div>
                 </div>
-                
+
                 <p className="text-gray-600 mb-4">{dish.description}</p>
-                
+
                 <div className="flex items-center text-gray-500 text-sm mb-4">
                   <FaClock className="mr-2" />
                   <span>{dish.prepTime} • Free delivery</span>
                 </div>
-                
+
                 <div className="flex items-center justify-between">
                   <div>
                     <span className="text-gray-400 line-through">{dish.price}</span>
                     <span className="ml-3 text-2xl font-bold text-gray-800">{dish.discount}</span>
                   </div>
-                  <button className="bg-gradient-to-r from-red-500 to-orange-500 hover:from-red-600 hover:to-orange-600 text-white font-bold px-6 py-3 rounded-xl transition-all duration-300 transform hover:scale-105">
+                  <button
+                    onClick={() => addToCart({ ...dish, discountPrice: dish.discount })}
+                    className="bg-gradient-to-r from-red-500 to-orange-500 hover:from-red-600 hover:to-orange-600 text-white font-bold px-6 py-3 rounded-xl transition-all duration-300 transform hover:scale-105"
+                  >
                     Add to Cart
                   </button>
                 </div>
@@ -399,11 +410,11 @@ const Home = () => {
               We're committed to providing the best food delivery experience
             </p>
           </div>
-          
+
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {features.map((feature, index) => (
-              <div 
-                key={index} 
+              <div
+                key={index}
                 className="bg-white p-6 rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 transform hover:scale-105"
               >
                 <div className={`bg-gradient-to-r ${feature.color} p-4 rounded-2xl inline-block mb-4`}>
@@ -430,30 +441,30 @@ const Home = () => {
                 </div>
                 <span className="font-bold text-lg">Exclusive Offer!</span>
               </div>
-              
+
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
                 Get <span className="text-yellow-300">23% OFF</span> on Your First Order!
               </h2>
-              
+
               <p className="text-lg mb-6 opacity-90">
                 New customers only. Limited time offer. Hurry up!
               </p>
-              
+
               <div className="flex flex-col sm:flex-row gap-4">
-                <button className="bg-white text-red-600 font-bold px-8 py-4 rounded-xl hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 shadow-lg">
+                <Link to="/menu" className="bg-white text-red-600 font-bold px-8 py-4 rounded-xl hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 shadow-lg">
                   <div className="flex items-center justify-center gap-3">
                     <span>🎯</span>
                     <span>GRAB OFFER NOW</span>
                   </div>
-                </button>
-                
+                </Link>
+
                 <div className="bg-white/20 p-4 rounded-xl">
                   <div className="font-bold mb-1">Use Code</div>
                   <div className="text-2xl font-extrabold">WELCOME23</div>
                 </div>
               </div>
             </div>
-            
+
             <div className="lg:w-1/2 flex justify-center">
               <div className="relative">
                 <img
@@ -487,11 +498,11 @@ const Home = () => {
             Join thousands of satisfied customers who enjoy our food and service
           </p>
         </div>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {testimonials.map((testimonial, index) => (
-            <div 
-              key={index} 
+            <div
+              key={index}
               className="bg-white p-6 rounded-3xl shadow-lg hover:shadow-xl transition-all duration-300"
             >
               <div className="flex items-center mb-4">
@@ -529,19 +540,19 @@ const Home = () => {
           <p className="text-xl mb-8 opacity-90">
             Download our app and get 23% off on your first order!
           </p>
-          
+
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
             <button className="bg-white text-red-600 font-bold px-8 py-4 rounded-xl hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 shadow-lg flex items-center gap-3">
               <FaPhoneAlt />
               <span>Call to Order: +91 98765 43210</span>
             </button>
-            
-            <button className="bg-gradient-to-r from-yellow-400 to-yellow-300 text-gray-800 font-bold px-8 py-4 rounded-xl hover:from-yellow-500 hover:to-yellow-400 transition-all duration-300 transform hover:scale-105 shadow-lg flex items-center gap-3">
+
+            <Link to="/menu" className="bg-gradient-to-r from-yellow-400 to-yellow-300 text-gray-800 font-bold px-8 py-4 rounded-xl hover:from-yellow-500 hover:to-yellow-400 transition-all duration-300 transform hover:scale-105 shadow-lg flex items-center gap-3">
               <MdRestaurantMenu />
               <span>ORDER NOW WITH 23% OFF</span>
-            </button>
+            </Link>
           </div>
-          
+
           <div className="mt-8 text-sm opacity-80">
             <p>Available in Mumbai, Delhi, Bangalore, Hyderabad, and 20+ cities</p>
           </div>

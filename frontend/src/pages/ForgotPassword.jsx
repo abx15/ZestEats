@@ -3,7 +3,7 @@ import axios from "axios";
 import logo from "../assets/Logo.png";
 import { Navigate } from "react-router-dom";
 
-const serverUrl = "http://localhost:8000";
+import { serverUrl } from "../App";
 
 const ForgotPassword = () => {
   const [step, setStep] = useState(1);
@@ -13,52 +13,7 @@ const ForgotPassword = () => {
   const [confirmPass, setConfirmPass] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleStep1 = async (e) => {
-    try {
-      const result = await axios.post(`${serverUrl}/api/auth/send-otp`, { email },
-        { withCredentials: true }
-      );
-      alert(result.data.message || "OTP sent!");
-      setStep(2);
-    } catch (error) {
-      console.log(error);
-    }
 
-  };
-
-  const handleStep2 = async (e) => {
-    try {
-      const result = await axios.post(`${serverUrl}/api/auth/verify-otp`, { email, otp },
-        { withCredentials: true }
-      );
-      alert(result.data.message || "OTP Verified!");
-      setStep(3);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const handleStep3 = async (e) => {
-    if (password !== confirmPass) return alert("Passwords don't match!");
-    setLoading(true);
-
-    try {
-      const result = await axios.post(`${serverUrl}/api/auth/reset-password`, {
-        email,
-        newPassword: password,
-      });
-      alert(result.data.message);
-      Navigate("/login");
-    } catch (error) {
-
-    }
-  };
-
-  const handleStep4 = async (e) => {
-    const { step, confirmPass, } = e;
-    setStep(step);
-    setConfirmPass(confirmPass);
-  };
 
 
   // STEP 1 ▶ Send OTP

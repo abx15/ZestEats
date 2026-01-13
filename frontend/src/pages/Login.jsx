@@ -1,13 +1,13 @@
-
 import React, { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { auth } from "../firebase";
+import { serverUrl } from "../App";
 
 import logo from "../assets/Logo.png";
-
-const serverUrl = "http://localhost:8000";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -39,6 +39,35 @@ const Login = () => {
       alert(error.response?.data?.message || "Login failed!");
     }
   };
+
+  const googleAuth = async (e) => {
+    e.preventDefault();
+
+    try {
+      const provider = new GoogleAuthProvider();
+      const result = await signInWithPopup(auth, provider);
+
+      const user = result.user;
+      const idToken = await user.getIdToken();
+
+      // Send token to backend for verification & user creation
+      const res = await axios.post(
+        `${serverUrl}/api/auth/google-login`,
+        { token: idToken },
+        { withCredentials: true }
+      );
+
+      if (res.status === 200) {
+        localStorage.setItem("token", res.data.token);
+        alert("Google Login Successful");
+        navigate("/");
+      }
+    } catch (error) {
+      console.error(error);
+      alert(error.message || "Google login failed");
+    }
+  };
+
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-background text-text px-4 pt-20">
@@ -114,7 +143,7 @@ const Login = () => {
           <button
             type="button"
             className="w-full flex items-center justify-center gap-2 py-2 border border-gray-300 rounded hover:bg-gray-100 transition-all"
-            onClick={() => window.open(`${serverUrl}/auth/google`, "_self")}
+            onClick={googleAuth}
           >
             <FcGoogle /> Login with Google
           </button>

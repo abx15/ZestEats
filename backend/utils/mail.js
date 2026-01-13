@@ -24,7 +24,8 @@ export const sendOtpMail = async (to, otp, html) => {
         });
         return true;
     } catch (error) {
-        console.error(error);
+        console.error("OTP Email Sending Failed:", error.message);
+        if (error.response) console.error("SMTP Response:", error.response);
         return false;
     }
 };
