@@ -2,6 +2,8 @@ import Order from '../models/order.model.js';
 import User from '../models/user.model.js';
 import Restaurant from '../models/restaurant.model.js';
 import { sendEmail, ORDER_PLACED_TEMPLATE, ORDER_STATUS_TEMPLATE } from '../utils/emailService.js';
+import Razorpay from 'razorpay';
+import crypto from 'crypto';
 
 export const createOrder = async (req, res) => {
     try {
@@ -90,8 +92,7 @@ export const updateOrderStatus = async (req, res) => {
     }
 };
 
-import Razorpay from 'razorpay';
-import crypto from 'crypto';
+
 
 // Initialize Razorpay
 const razorpay = new Razorpay({
