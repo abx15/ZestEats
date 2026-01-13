@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
@@ -6,10 +5,9 @@ import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from "../firebase";
+import { serverUrl } from "../App";
 
 import logo from "../assets/Logo.png";
-
-const serverUrl = "http://localhost:8000";
 
 const Login = () => {
   const navigate = useNavigate();
