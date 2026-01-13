@@ -196,6 +196,5 @@ export const googleLogin = async (req, res) => {
         return res.status(500).json({ message: "Google Authentication failed" });
     }
 }
-};
 
 export { signup, login, logout, sendOtp, verifyOtp, resetPassword };

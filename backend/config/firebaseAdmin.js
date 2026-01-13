@@ -20,12 +20,17 @@ const serviceAccount = {
 
 if (!admin.apps.length) {
     try {
-        admin.initializeApp({
-            credential: admin.credential.cert(serviceAccount)
-        });
-        console.log("Firebase Admin Initialized");
+        if (serviceAccount.project_id && serviceAccount.private_key && serviceAccount.client_email) {
+            admin.initializeApp({
+                credential: admin.credential.cert(serviceAccount)
+            });
+            console.log("Firebase Admin Initialized Successfully");
+        } else {
+            console.warn("WARNING: Firebase Admin Env Variables missing. Google Login may not work.");
+        }
     } catch (error) {
-        console.error("Firebase Admin Initialization Error:", error);
+        console.error("Firebase Admin Initialization Error:", error.message);
+        // Do not crash the server, just log the error
     }
 }
 
